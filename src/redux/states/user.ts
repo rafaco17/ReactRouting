@@ -9,12 +9,14 @@ export const EmptyUserState: UserInfo = {
 
 export const userSilce = createSlice({
     name: 'user',
-    initialState: EmptyUserState,
+    initialState: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : EmptyUserState,
     reducers: {
         createUser: (state, action) => {
+            localStorage.setItem('user', JSON.stringify({ ...action.payload }));
             return action.payload;
         },
         updateUser: (state, action) => {
+            localStorage.setItem('user', JSON.stringify({ ...action.payload }));
             return { ...state, ...action.payload };
         },
         resetUser: (state, action) => {
