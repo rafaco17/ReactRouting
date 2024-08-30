@@ -1,7 +1,18 @@
+import { useEffect } from "react"
+import { sharingInformationState } from "../../services/sharingInformationState"
+
 function NotFound() {
-    
+    useEffect(() => {
+        sharingInformationState.setSubject(true);
+        return () => {
+            sharingInformationState.setSubject(false);
+        }
+    }, [])
+
   return (
-    <div>NotFound</div>
+    <div>
+        Not found
+    </div>
   )
 }
 export default NotFound

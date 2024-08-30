@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux"
 import { resetUser } from "../../redux/states/user"
 import { useNavigate } from "react-router-dom"
 import { PublicRoutes } from "../../models"
+import { useEffect, useState } from "react"
+import { sharingInformationState } from "../../services/sharingInformationState"
 
 function LogOut() {
     const dispatcher = useDispatch()
@@ -12,9 +14,22 @@ function LogOut() {
         navigate(`/${PublicRoutes.LOGIN}`, {replace: true})
     }
 
+    const [ disguise, setDisguise ] = useState(false)
+
+    useEffect(() => {
+      const subscription$ = sharingInformationState.getSubject().subscribe(data => {
+        console.log("Esta es mi data: ",data)
+        setDisguise(data)
+      })
+
+      return () => {
+        subscription$.unsubscribe()
+      }
+    }, [])
+
   return (
     <div>
-        <button onClick={logOut}>Log Out</button>
+        <button onClick={logOut} hidden={disguise}>Log Out</button>
     </div>
   )
 }
