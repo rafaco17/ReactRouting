@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom"
+import { NotFound } from "../components/notfount"
 
 interface Props {
     children: React.ReactNode
@@ -8,7 +9,7 @@ function RoutesWithNotFound( {children}: Props ) {      // con este componente n
   return (
     <Routes>
         {children}
-        <Route path="*" element={<div>Not Fount</div>}></Route>
+        <Route path="*" element={<NotFound />}></Route>
     </Routes>
   )
 }

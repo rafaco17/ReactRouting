@@ -2,10 +2,11 @@ import { BrowserRouter, Navigate, Route } from 'react-router-dom'
 import './App.css'
 import { Provider } from 'react-redux'
 import riemStore from './redux/store'
-import { PrivateRoutes, PublicRoutes } from './models'
-import { AuthGuard } from './guards'
+import { PrivateRoutes, PublicRoutes, Role } from './models'
+import { AuthGuard, AuthRoles } from './guards'
 import RoutesWithNotFound from './utilities/routesWithNotFound'
 import { lazy, Suspense } from 'react'
+import { Dashboard } from './pages/Dashboard/DashBoard'
 
 // para este proyecto solo sera necesario instalar npm install react-router-dom
 // para el tema de redux los clasicos: npm install @reduxjs/toolkit, npm install react-redux 
@@ -33,6 +34,9 @@ function App() {
               <Route path={PublicRoutes.LOGIN} element={<Login />}></Route>
               <Route element={<AuthGuard />}>
                 <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Private />}></Route>
+              </Route>
+              <Route element={<AuthRoles rol={Role.ADMIN} />}>
+                <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />}></Route>
               </Route>
             </RoutesWithNotFound>
           </BrowserRouter>
